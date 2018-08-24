@@ -1,7 +1,7 @@
 {
   "name": "json-to-scss",
-  "version": "1.0.1",
-  "main": "bin/cli.js",
+  "version": "1.0.2",
+  "main": "lib/jsJsonFilesToSassScssFiles.js",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -31,6 +31,6 @@
     "yargs": "^12.0.1"
   },
   "bin": {
-    "json-to-scss": "lib/jsJsonFilesToSassScssFiles.js"
+    "json-to-scss": "bin/cli.js"
   }
 }
