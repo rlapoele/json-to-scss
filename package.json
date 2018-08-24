@@ -1,0 +1,36 @@
+{
+  "name": "json-to-scss",
+  "version": "1.0.0",
+  "main": "bin/cli.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rlapoele/json-to-scss.git"
+  },
+  "author": {
+    "name": "Renaud Lapoële",
+    "email": "rlapoele@gmail.com"
+  },
+  "description": "A small utility to convert js & json file(s) to scss/sass file(s).",
+  "keywords": [
+    "converter",
+    "js",
+    "json",
+    "sass",
+    "scss"
+  ],
+  "homepage": "https://github.com/rlapoele/json-to-scss#readme",
+  "issues": "https://github.com/rlapoele/json-to-scss/issues",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "glob": "^7.1.2",
+    "lodash.isinteger": "^4.0.4",
+    "lodash.isplainobject": "^4.0.6",
+    "node-emoji": "^1.8.1",
+    "terminal-overwrite": "^2.0.1",
+    "yargs": "^12.0.1"
+  },
+  "bin": {
+    "json-to-scss": "lib/jsJsonFilesToSassScssFiles.js"
+  }
+}
