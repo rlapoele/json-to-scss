@@ -8,7 +8,7 @@
 - Fixes/Enhancements
   - added missing support for empty string setup options.
   - wrapped "require(content.js/.json) ..." code portion in try / catch to improve code robustness.
-  - removed what seemed to be an unnecessary json to string round-trip conversions.
+  - removed what seems to be an unnecessary json to string & string to json conversion.
 - Updates
   - README.md updates to reflect the updated usage and so on.
 
