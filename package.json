@@ -1,6 +1,6 @@
 {
   "name": "json-to-scss",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "lib/jsJsonFilesToSassScssFiles.js",
   "license": "MIT",
   "repository": {
@@ -32,5 +32,11 @@
   },
   "bin": {
     "json-to-scss": "bin/cli.js"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.5"
+  },
+  "scripts": {
+    "build:docs": "jsdoc --readme README.md bin lib -r -d docs"
   }
 }

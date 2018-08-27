@@ -18,17 +18,17 @@ This library has initially been created to help make javascript defined design t
 To use _json-to-scss_ as development dependency with...
 
 #### Yarn
-```
+```shell
 yarn add -D json-to-scss
 ```
 
 #### Npm
-```
+```shell
 npm install json-to-scss --save-dev
 ```
 
 ## Usage
-```
+```shell
 Usage: json-to-scss <source> [destination] [options]
 
        source:           the path to a javascript, json or group of files to be converted.

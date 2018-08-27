@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: json-to-scss/lib/converter/jsToSassString</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: json-to-scss/lib/converter/jsToSassString</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="module:json-to-scss/lib/converter/jsToSassString"><span class="type-signature"></span>module:json-to-scss/lib/converter/jsToSassString<span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Module exports.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_jsValueToSassString.js.html">lib/jsValueToSassString.js</a>, <a href="lib_jsValueToSassString.js.html#line131">line 131</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="~FN_DEFAULT_CONFIG"><span class="type-signature">(inner, constant) </span>FN_DEFAULT_CONFIG<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Module constants (or alike)
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_jsValueToSassString.js.html">lib/jsValueToSassString.js</a>, <a href="lib_jsValueToSassString.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~isPlainObject"><span class="type-signature">(inner, constant) </span>isPlainObject<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Module imports/dependencies.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_jsValueToSassString.js.html">lib/jsValueToSassString.js</a>, <a href="lib_jsValueToSassString.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~jsValueToSassString"><span class="type-signature">(inner) </span>jsValueToSassString<span class="signature">(value, config)</span><span class="type-signature"> &rarr; {*|string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts a javascript value into a string compatible with sass/scss syntax.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the js value to be converted into a string compatible with sass/scss syntax.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">function options relative to indentation & sass/scss empty string representation.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_jsValueToSassString.js.html">lib/jsValueToSassString.js</a>, <a href="lib_jsValueToSassString.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    string sass representation of the value.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+|
+
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-json-to-scss_lib_converter_jsToSassString.html">json-to-scss/lib/converter/jsToSassString</a></li><li><a href="module-json-to-scss_lib_jsJsonFilesToSassScssFiles_.html">json-to-scss/lib/jsJsonFilesToSassScssFiles</a></li><li><a href="module-lib_utils_inspection_isNull.html">lib/utils/inspection/isNull</a></li><li><a href="module-lib_utils_inspection_isPositiveInteger.html">lib/utils/inspection/isPositiveInteger</a></li><li><a href="module-lib_utils_inspection_isString.html">lib/utils/inspection/isString</a></li><li><a href="module-lib_utils_inspection_isUndefined.html">lib/utils/inspection/isUndefined</a></li><li><a href="module-lib_utils_path_basename.html">lib/utils/path/basename</a></li><li><a href="module-lib_utils_path_hasExtension.html">lib/utils/path/hasExtension</a></li><li><a href="module-lib_utils_path_removeExtension.html">lib/utils/path/removeExtension</a></li><li><a href="module-lib_utils_textIndentation.html">lib/utils/textIndentation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#banner">banner</a></li><li><a href="global.html#basenameExtractor">basenameExtractor</a></li><li><a href="global.html#createPathDirectories">createPathDirectories</a></li><li><a href="global.html#dirnameSetup">dirnameSetup</a></li><li><a href="global.html#extensionCorrector">extensionCorrector</a></li><li><a href="global.html#hasArgs">hasArgs</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#normalizeArgs">normalizeArgs</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#usage">usage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Aug 28 2018 00:13:42 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

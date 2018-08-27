@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+### Release 1.1.1
+- Added code documentation & generated it with _jsdoc_ in the `docs` folder.
+
 ### Release 1.1.0
 - New Features:
   - auto-detection of a '_jsonToScssConfig' property within .js/.json files:
