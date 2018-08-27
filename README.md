@@ -29,34 +29,32 @@ npm install json-to-scss --save-dev
 
 ## Usage
 ```
+Usage: json-to-scss <source> [destination] [options]
 
-    Usage: json-to-scss <source> [destination] [options]
-    
-           source:       the path to a javascript, json or group of files to be converted.
-           (required)       - only '.js' and '.json' are processed.
-           
-           destination:  the full or partial destination of the converted files.
-           (optional)       - when the destination is a directory path only, all generated
-                              files are saved in it with a default '.scss' extension. If
-                              a '.sass' extension is required instead, the --sass option must be included.
-                            - when specified, a file extension different than '.sass' or '.scss' will be
-                              replaced by '.scss'.
-    
-                       
-           options:
-           
-            --h             (help)         Show this message.
-            --p='prefix'    (prefix)       Prepend the converted sass/scss content with the prefix.
-                                           Default '${source-filename} :'.
-            --s='suffix'    (suffix)       Append the converted sass/scss content with the suffix.
-                                           Default: ';' (default not used if --sass)
-            --tt='tabText'  (tab text)     Text to be used to indent or tabulate sass map.
-                                           Default: '  ' (two space characters)
-            --tn=tabNumber  (tab number)   Number of tabulations.
-                                           Default: 1 (set to 0 if --sass)
-            --es='sq'||'dq' (empty string) Sass/scss representation for an empty string.
-                                           Default is '""': { "prop": "" } => $xyzfilename: ( prop: "" );
-            --sass          (sass ext.)    Use sass extension.
+       source:           the path to a javascript, json or group of files to be converted.
+       (required)        - only '.js' and '.json' are processed.
+       
+       destination:      the full or partial destination of the converted files.
+       (optional)        - when the destination is a directory path only, all generated
+                           files are saved in it with a default '.scss' extension. If
+                           a '.sass' extension is required instead, the --sass option must be included.
 
- 
+                   
+       options:
+       
+        --h              (help)           Show this message.
+        --p='prefix'     (prefix)         Prepend the converted sass/scss content with the prefix.
+                                          Prefix is usually used & set to be used as sass variable name.
+                                          Default '${source-filename} :'.
+        --no-underscore  (no leading _)   Remove any leading '_' (underscore) characters from the
+                                          prefix when used as sass variable name.
+        --s='suffix'     (suffix)         Append the converted sass/scss content with the suffix.
+                                          Default: ';' (default not used if --sass)
+        --tt='tabText'   (tab text)       Text to be used to indent or tabulate sass map.
+                                          Default: '  ' (two space characters)
+        --tn=tabNumber   (tab number)     Number of tabulations.
+                                          Default: 1 (set to 0 if --sass)
+        --es='sq'||'dq'  (empty string)   Sass/scss representation for an empty string.
+                                          Default is '""': { "prop": "" } => $xyzfilename: ( prop: "" );
+        --sass           (sass ext.)      Use sass extension.  
 ```
