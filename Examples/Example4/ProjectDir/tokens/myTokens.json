@@ -1,0 +1,15 @@
+{
+  "_jsonToScss": {
+    "filename": "myTokensRenamed"
+  },
+  "colors": {
+    "primary-color": "#FFFFFF",
+    "accent-color": "#0099FF"
+  },
+  "font-sizes": {
+    "small": ".875rem",
+    "medium": "1rem",
+    "large": "2rem"
+  },
+  "web-browser-default-font-size": "16px"
+}
