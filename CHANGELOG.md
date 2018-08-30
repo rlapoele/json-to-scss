@@ -1,12 +1,15 @@
 # CHANGE LOG
 
-### Release 1.2.1
+### Release 1.2.0
 - New Feature:
   - expanded definition of .js/.json self config ('_jsonToScssConfig') to add a new 'filename' property.
     - this allows users to define custom destination file name directly within the .js/.json file(s) they want to convert to sass or scss.
+- Enhancements:
+  - Added error message when specified source is invalid. This prevents situation when source is invalid and app appears to react as if nothing happened.
 - Updates:
   - remove jsdoc docs - users can still generate it from their side if interested.
-  - added explanations and examples to README.md.
+  - added an Examples folder with 4 examples.
+  - added explanations and examples to README.md. 
 
 ### Release 1.1.1
 - Added code documentation & generated it with _jsdoc_ in the `docs` folder.
