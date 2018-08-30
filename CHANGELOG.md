@@ -1,5 +1,11 @@
 # CHANGE LOG
 
+### Release 1.2.1
+- Documentation updates.
+- Enhancements:
+  - improved function input param validation
+  - leveraged const default config.
+
 ### Release 1.2.0
 - New Feature:
   - expanded definition of .js/.json self config ('_jsonToScssConfig') to add a new 'filename' property.

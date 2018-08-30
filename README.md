@@ -84,7 +84,7 @@ module.exports = {
   colors: {
     red: colorRed,
     green: "#00FF00",
-    white: colorBlue
+    blue: colorBlue
   }
 }
 ```
@@ -223,8 +223,8 @@ $ json-to-scss './Examples/Example2/**/*.*'
 $ json-to-scss json-to-scss './Examples/Example2/**/*.*'
 $ json-to-scss vX.Y.Z
 $    /.../Examples/Example2/ProjectDir/tokens/colors.js: content converted. File created!
-$       /.../Examples//Example2/ProjectDir/tokens/colors.scss
-$    /.../Examples//Example2/ProjectDir/tokens/fontSizes.json: content converted. File created!
+$       /.../Examples/Example2/ProjectDir/tokens/colors.scss
+$    /.../Examples/Example2/ProjectDir/tokens/fontSizes.json: content converted. File created!
 $       /.../Examples/Example2/ProjectDir/tokens/fontSizes.scss
 ```
 
@@ -340,9 +340,11 @@ As you can notice in the produced sass content presented above, the options rela
 
 #### Example #4
 
-For this example, we'll reuse the same directory structure as for the first example.
+For this example, we'll reuse the same directory structure as in the first example.
 
-However, we will include a local conversion configuration directly within the json file that we want to convert.
+However this time, we will include a local conversion configuration directly within the json file that we want to convert.
+
+As you will see, this local config will overwrite/supersede the default & command line (through options) configs.
 
 ##### Directory Structure:
 
@@ -385,35 +387,37 @@ However, we will include a local conversion configuration directly within the js
 }
 ```
 
-Notice the **`_jsonToScss`** property & object in our `myTokens.json` file.
+Notice the **`"_jsonToScss"`** property & object in our `myTokens.json` file.
 
 This object is treated as a local conversion configuration; let us see what properties it contains:
 
 - **sassVariableName**
-  - this tells _json-to-scss_ to prefix the converted content using "__example-4". Notice here that you do not need to include the `$` character since _json-to-scss_ will automatically insert it for you.
+  - this tells _json-to-scss_ to prefix the converted content using `__example-4`. Notice here that you do not need to include the `$` character since _json-to-scss_ will automatically insert it for you.
   
-  - **note:** this only exists in the context of local config and there is therefore no direct equivalent option at the command line level; the closet option is "--prefix".
+  - **notes:**
+    - this feature only exists in the context of local config and there is therefore no direct equivalent option at the command line level; the command line option which could potentially yield similar results is "--prefix".
+    - when specified, the `"sassVariableName"` property value takes precedence over the `"prefix"` property value (and therefore equivalent command line option "--prefix").
 
 - **filename**
-  - this informs _json-to-scss_ that the destination file will have to be renamed "myTokensRenamed". 
+  - this informs _json-to-scss_ that the destination file will have to be renamed ("myTokensRenamed" in this example); any specified extension will be ignored. 
 
 - **prefix**
   - allows one to define or locally override the content prefix. In this example, the "garbage" value will be ignored due to the definition of **sassVariableName** in the same local configuration.
 
 - **suffix**
-  - allows one to define or locally override the content suffix. In this example, "" will be appended to "myTokens.json" converted content.  
+  - allows one to define or locally override the content suffix. In this example, "; // an scss comment." will be appended to "myTokens.json" converted content.  
 
 - **emptyString**
-  - tells _json-to-scss_ how to format sass values equal to empty strings.
+  - tells _json-to-scss_ how to format sass values equal to empty strings. By default and here too, empty string values are represented as `''` (two single quotes)
 
 - **indentationText**
-  - specifies the portion of text to be used as indentation "space". Here, "  " (two white spaces) is set as the indentation text.
+  - specifies the portion of text to be used as indentation "space". Here, `"  "` (two white spaces) is set as the indentation text.
   
 - **indentationSize**
-  - indicates the number of indentation "space"(s) must be used when indenting content; in our example, since the value is 2, it will indent nested sass maps with 2 "space" text chunk per indentation level.
+  - indicates the number of indentation "space"(s) which must be used when indenting content; in our example, since the value is 2, it will indent nested sass maps/values with 2 "space" text chunks per indentation level.
 
 - **noUnderscore**
-  - when set to "true" (as it is the case in our example), this tells _json-to-scss_ to remove any `_` (underscore) character possibly present in the prefix and if such a prefix starts with `$_`.
+  - when set to `true` (as it is the case in our example), this tells _json-to-scss_ to remove any `_` (underscore) character possibly present in the prefix and if such a prefix starts with `$_`. The same result can be achieved for all converted files using the command line option "--no-underscore".
 
 
 ##### Command:
@@ -467,7 +471,7 @@ $example-4: (
 ); // an scss comment.
 ```
 
-As expected, the "_scssToJson" local configuration object has been removed and the converted content has been prefixed using "__example-4".
+As expected, the `"_scssToJson"` local configuration property/object has been removed and the converted content has been prefixed using "__example-4".
 
-Additionally and due to the presence of `"noUnderscore": true`, all "_" (underscore) characters have been stripped out in the prefix/variable name after the automatically added `$` (dollar sign).
+Additionally and due to the presence of `"noUnderscore": true`, all "`_`" (underscore) characters have been stripped out from the prefix/variable name after the automatically added "`$`" (dollar sign).
 
