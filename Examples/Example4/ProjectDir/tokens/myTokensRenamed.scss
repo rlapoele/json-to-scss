@@ -1,12 +1,13 @@
-$myTokens: (
-  colors: (
-    primary-color: #FFFFFF,
-    accent-color: #0099FF
-  ),
-  font-sizes: (
-    small: .875rem,
-    medium: 1rem,
-    large: 2rem
-  ),
-  web-browser-default-font-size: 16px
-);
+$example-4: (
+    colors: (
+        primary-color: #FFFFFF,
+        accent-color: #0099FF
+    ),
+    font-sizes: (
+        small: .875rem,
+        medium: 1rem,
+        large: 2rem
+    ),
+    example-of-empty-string: '',
+    web-browser-default-font-size: 16px
+); // an scss comment.

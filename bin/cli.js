@@ -185,7 +185,12 @@ function main() {
     }
     else {
       const _nargs = normalizeArgs(args);
-      jsJsonFilesToSassScssFiles(_nargs.source.paths, _nargs.destination.paths, _nargs.options);
+      if (_nargs.source.paths.length) {
+        jsJsonFilesToSassScssFiles(_nargs.source.paths, _nargs.destination.paths, _nargs.options);
+      }
+      else {
+        console.log(`Hmmm strange... ${chalk.red(args._[0])} does not seem to exist. Mind checking it?`);
+      }
     }
   }
   else {

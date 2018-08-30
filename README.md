@@ -74,7 +74,7 @@ Usage: json-to-scss <source> [destination] [options]
 
 _json-to-scss_ can convert `.js` files as long as these are a nodejs modules exporting a **javascript object**.
 
-#### Example
+#### Javascript (node module) file sample
 
 ```js
 const colorRed = "#FF0000";
@@ -107,7 +107,7 @@ This example shows how to convert a single specific file using the default _json
 .   .
 ```
 
-##### Source file (myTokens.json):
+##### myTokens.json
 
 ```json
 {
@@ -154,7 +154,7 @@ $       /.../Examples/Example1/ProjectDir/tokens/myTokens.scss
 .   .
 ```
 
-###### Converted file (myTokens.scss):
+###### myTokens.scss
 
 ```scss
 $myTokens: (
@@ -170,4 +170,304 @@ $myTokens: (
   web-browser-default-font-size: 16px
 );
 ```
+
+#### Example #2
+In this example, we will demonstrate _json-to-scss_ ability to accept glob patterns.
+
+Note that when using a glob pattern, the source argument must be wrapped in single quotes such as `'...**/*.*'`.
+
+##### Directory Structure:
+
+```
+.
+├─ Examples
+│   ├─ Example2
+│   │   └─ ProjectDir
+│   │       └─ tokens 
+│   │           ├─ colors.js
+│   │           └─ fontSizes.js
+.   .
+```
+
+##### colors.js
+```js
+module.exports = {
+  colors: {
+    "primary-color": "#FFFFFF",
+    "accent-color": "#0099FF"
+  }
+};
+```
+
+##### fontSizes.json
+```json
+{
+  "font-sizes": {
+    "small": ".875rem",
+    "medium": "1rem",
+    "large": "2rem"
+  },
+  "web-browser-default-font-size": "16px"
+}
+```
+
+##### Command:
+
+###### Input:
+```
+$ json-to-scss './Examples/Example2/**/*.*'
+```
+
+###### Output:
+```
+$ json-to-scss json-to-scss './Examples/Example2/**/*.*'
+$ json-to-scss vX.Y.Z
+$    /.../Examples/Example2/ProjectDir/tokens/colors.js: content converted. File created!
+$       /.../Examples//Example2/ProjectDir/tokens/colors.scss
+$    /.../Examples//Example2/ProjectDir/tokens/fontSizes.json: content converted. File created!
+$       /.../Examples/Example2/ProjectDir/tokens/fontSizes.scss
+```
+
+##### Results:
+
+###### Directory Structure:
+
+```
+.
+├─ Examples
+│   ├─ Example2
+│   │   └─ ProjectDir
+│   │       └─ tokens 
+│   │           ├─ colors.js
+│   │           ├─ colors.js
+│   │           ├─ fontSizes.json
+│   │           └─ fontSizes.scss 
+.   .
+```
+
+###### colors.scss
+
+```scss
+$colors: (
+  colors: (
+    primary-color: #FFFFFF,
+    accent-color: #0099FF
+  )
+);
+```
+
+
+###### fontSizes.scss
+
+```scss
+$fontSizes: (
+  font-sizes: (
+    small: .875rem,
+    medium: 1rem,
+    large: 2rem
+  ),
+  web-browser-default-font-size: 16px
+);
+```
+
+#### Example #3
+This example will target a similar directory source structure & the same set of files however, this time, we will specify a `sass` target directory for the converted files and request _json-to-scss_ to format the output in `sass` format.
+
+Additionally, we will ask _json-to-scss_ to use a tab text (_--tt option_) such as `'    '` (4 spaces) and to use a tab number/size (_--tn option_) of `5`...
+
+##### Directory Structure:
+
+```
+.
+├─ Examples
+│   ├─ Example3
+│   │   └─ ProjectDir
+│   │       └─ tokens 
+│   │           ├─ colors.js
+│   │           └─ fontSizes.js
+.   .
+```
+
+##### Command:
+
+###### Input:
+```
+$ json-to-scss './Examples/Example3/**/*.*' ./Examples/Example3/ProjectDir/sass --sass --tt='    ' --tn=5
+```
+
+###### Output:
+```
+$ json-to-scss './Examples/Example3/**/*.*' ./Examples/Example3/ProjectDir/sass --sass --tt='    ' --tn=5
+$ json-to-scss vX.Y.Z
+$    /.../Examples/Example3/ProjectDir/tokens/colors.js: content converted. File created!
+$       /.../Examples/Example3/ProjectDir/sass/colors.sass
+$    /.../Examples/Example3/ProjectDir/tokens/fontSizes.json: content converted. File created!
+$       /.../Examples/Example3/ProjectDir/sass/fontSizes.sass
+```
+
+##### Results:
+
+###### Directory Structure:
+
+```
+.
+├─ Examples
+│   ├─ Example3
+│   │   └─ ProjectDir
+│   │       ├─ sass 
+│   │       │    ├─ colors.sass
+│   │       │    └─ fontSizes.sass
+│   │       └─ tokens 
+│   │           ├─ colors.js
+│   │           └─ fontSizes.js
+.   .
+```
+
+
+###### /sass/colors.sass
+
+```sass
+$colors: (colors: (primary-color: #FFFFFF, accent-color: #0099FF)) 
+```
+
+###### /sass/fontSizes.sass
+
+```sass
+$fontSizes: (font-sizes: (small: .875rem, medium: 1rem, large: 2rem), web-browser-default-font-size: 16px)
+```
+
+As you can notice in the produced sass content presented above, the options related to the text indentation (_--tt_ and _--tn_) have both been ignored and, since we asked to produce sass here, the default indentation has even been removed.
+
+#### Example #4
+
+For this example, we'll reuse the same directory structure as for the first example.
+
+However, we will include a local conversion configuration directly within the json file that we want to convert.
+
+##### Directory Structure:
+
+```
+.
+├─ Examples
+│   ├─ Example4
+│   │   └─ ProjectDir
+│   │       └─ tokens 
+│   │           └─ myTokens.json
+.   .
+```
+
+##### myTokens.json:
+
+```json
+{
+  "_jsonToScss": {
+    "sassVariableName": "__example-4",
+    "filename": "myTokensRenamed",
+    "prefix": "garbage",
+    "suffix": "; // an scss comment.",
+    "emptyString": "''",
+    "indentationText": "  ",
+    "indentationSize": 2,
+    "noUnderscore": true
+  },
+  "colors": {
+    "primary-color": "#FFFFFF",
+    "accent-color": "#0099FF"
+  },
+  "font-sizes": {
+    "small": ".875rem",
+    "medium": "1rem",
+    "large": "2rem"
+    
+  },
+  "example-of-empty-string": "",
+  "web-browser-default-font-size": "16px"
+}
+```
+
+Notice the **`_jsonToScss`** property & object in our `myTokens.json` file.
+
+This object is treated as a local conversion configuration; let us see what properties it contains:
+
+- **sassVariableName**
+  - this tells _json-to-scss_ to prefix the converted content using "__example-4". Notice here that you do not need to include the `$` character since _json-to-scss_ will automatically insert it for you.
+  
+  - **note:** this only exists in the context of local config and there is therefore no direct equivalent option at the command line level; the closet option is "--prefix".
+
+- **filename**
+  - this informs _json-to-scss_ that the destination file will have to be renamed "myTokensRenamed". 
+
+- **prefix**
+  - allows one to define or locally override the content prefix. In this example, the "garbage" value will be ignored due to the definition of **sassVariableName** in the same local configuration.
+
+- **suffix**
+  - allows one to define or locally override the content suffix. In this example, "" will be appended to "myTokens.json" converted content.  
+
+- **emptyString**
+  - tells _json-to-scss_ how to format sass values equal to empty strings.
+
+- **indentationText**
+  - specifies the portion of text to be used as indentation "space". Here, "  " (two white spaces) is set as the indentation text.
+  
+- **indentationSize**
+  - indicates the number of indentation "space"(s) must be used when indenting content; in our example, since the value is 2, it will indent nested sass maps with 2 "space" text chunk per indentation level.
+
+- **noUnderscore**
+  - when set to "true" (as it is the case in our example), this tells _json-to-scss_ to remove any `_` (underscore) character possibly present in the prefix and if such a prefix starts with `$_`.
+
+
+##### Command:
+
+###### Input:
+```
+$ json-to-scss ./Examples/Example4/ProjectDir/tokens/myTokens.json
+```
+
+###### Output:
+```
+$ json-to-scss ./Examples/Example4/ProjectDir/tokens/myTokens.json
+$ json-to-scss vX.Y.Z
+$    /.../Examples/Example4/ProjectDir/tokens/myTokens.json: content converted. File created!
+$       /.../Examples/Example4/ProjectDir/tokens/myTokensRenamed.scss
+```
+
+##### Results:
+
+###### Directory Structure:
+
+```
+.
+├─ Examples
+│   ├─ Example4
+│   │   └─ ProjectDir
+│   │       └─ tokens 
+│   │           ├─ myTokens.json
+│   │           └─ myTokensRenamed.scss 
+.   .
+```
+
+Notice now how "myTokens" got renamed "myTokensRenamed".
+
+
+###### myTokensRenamed.scss:
+
+```scss
+$example-4: (
+    colors: (
+        primary-color: #FFFFFF,
+        accent-color: #0099FF
+    ),
+    font-sizes: (
+        small: .875rem,
+        medium: 1rem,
+        large: 2rem
+    ),
+    example-of-empty-string: '',
+    web-browser-default-font-size: 16px
+); // an scss comment.
+```
+
+As expected, the "_scssToJson" local configuration object has been removed and the converted content has been prefixed using "__example-4".
+
+Additionally and due to the presence of `"noUnderscore": true`, all "_" (underscore) characters have been stripped out in the prefix/variable name after the automatically added `$` (dollar sign).
 

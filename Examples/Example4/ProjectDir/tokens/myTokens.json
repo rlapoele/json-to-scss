@@ -1,6 +1,14 @@
 {
   "_jsonToScss": {
-    "filename": "myTokensRenamed"
+    "sassVariableName": "__example-4",
+    "filename": "myTokensRenamed",
+    "prefix": "garbage",
+    "suffix": "; // an scss comment.",
+    "emptyString": "''",
+    "indentationText": "  ",
+    "indentationSize": 2,
+    "noUnderscore": true
+
   },
   "colors": {
     "primary-color": "#FFFFFF",
@@ -10,6 +18,8 @@
     "small": ".875rem",
     "medium": "1rem",
     "large": "2rem"
+    
   },
+  "example-of-empty-string": "",
   "web-browser-default-font-size": "16px"
 }
