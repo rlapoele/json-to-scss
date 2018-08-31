@@ -1,5 +1,13 @@
 # CHANGE LOG
 
+### Release 1.2.2
+- Code Fixes:
+  - changed jsJsonFilesToSassScssFiles default config to ensure fn input validation flag is set to true by default.
+  - updated cli.js to handle above change.
+  - fixed typo in jsJsonFilesToSassScssFiles.js input validation (sourceFilepaths arg was checked 2 times instead of sourceFilepaths check + destinationFilepaths check.)
+- Enhancements:  
+  - re-organized jsJsonFilesToSassScssFiles code to be more functional.
+
 ### Release 1.2.1
 - Documentation updates.
 - Enhancements:
