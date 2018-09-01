@@ -9,7 +9,7 @@
 
 A small utility to convert js & json file(s) to scss/sass file(s).
 
-# Motivation
+## Motivation
 This library has initially been created to contribute to & facilitate the maintenance of living style guides.
 
 As far as living style guides go, defining and using an agreed upon a set of design properties is a good starting point and best practice (c.f. [_design tokens_](https://uxdesign.cc/design-tokens-for-dummies-8acebf010d71), [_Salesforce Lightning Design System_](https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/tokens_intro.htm), etc... ).

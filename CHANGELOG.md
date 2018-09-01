@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+### Release 1.2.3
+- Code cleanups & comments addition.
+
 ### Release 1.2.2
 - Code Fixes:
   - changed jsJsonFilesToSassScssFiles default config to ensure fn input validation flag is set to true by default.
