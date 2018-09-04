@@ -67,7 +67,7 @@ Usage: json-to-scss <source> [destination] [options]
                                           Default: 1 (set to 0 if --sass)
         --es='sq'||'dq'  (empty string)   Sass/scss representation for an empty string.
                                           Default is '""': { "prop": "" } => $xyzfilename: ( prop: "" );
-        --sass           (sass ext.)      Use sass extension.  
+        --sass           (sass ext.)      Use sass extension.
 ```
 
 ## Regarding `.js` files

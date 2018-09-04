@@ -1,5 +1,10 @@
 # CHANGE LOG
 
+### Release 1.2.4
+- Code modifications
+  - simplified code by removing all options & config objects as well unnecessary validations.
+  - Remove TextIndentation.js file/function (use String.prototype.repeat(...) directly instead).
+
 ### Release 1.2.3
 - Code cleanups & comments addition.
 
