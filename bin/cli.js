@@ -5,19 +5,17 @@
  * @author Renaud Lapoële
  */
 
-
 /**
  * Module dependencies.
  */
-const path                       = require('path');
-const packageJson                = require(path.join(__dirname, '../package.json'));
-const args                       = require('yargs').argv;
-const chalk                      = require('chalk');
-const glob                       = require('glob');
-const pathBasename               = require('../lib/utils/path/basename');
-const removePathExtension        = require('../lib/utils/path/removeExtension');
+const path = require('path');
+const packageJson = require(path.join(__dirname, '../package.json'));
+const args = require('yargs').argv;
+const chalk = require('chalk');
+const glob = require('glob');
+const pathBasename = require('../lib/utils/path/basename');
+const removePathExtension = require('../lib/utils/path/removeExtension');
 const jsJsonFilesToSassScssFiles = require('../lib/jsJsonFilesToSassScssFiles');
-
 
 /**
  * @function banner
@@ -26,10 +24,9 @@ const jsJsonFilesToSassScssFiles = require('../lib/jsJsonFilesToSassScssFiles');
  * @returns {string} this lib/package's name & version.
  * @description Returns a string containing the name and the version of this lib/package.
  */
-function banner (name, version) {
+function banner(name, version) {
   return `${chalk.bold(`${name || 'NO NAME'} v${version || '0.0.0'}`)}`;
 }
-
 
 /**
  * @function usage
@@ -37,14 +34,20 @@ function banner (name, version) {
  * @returns {string} the lib/package's usage text.
  * @description Returns the usage description of this lib/package.
  */
-function usage (name) {
+function usage(name) {
   return `
-    ${chalk.bold('Usage')}: ${chalk.yellow(name || 'NO NAME')} <source> [destination] [options]
+    ${chalk.bold('Usage')}: ${chalk.yellow(
+    name || 'NO NAME'
+  )} <source> [destination] [options]
     
-           ${chalk.bold('source')}:           the path to a javascript, json or group of files to be converted.
+           ${chalk.bold(
+             'source'
+           )}:           the path to a javascript, json or group of files to be converted.
            (required)        - only '.js' and '.json' are processed.
            
-           ${chalk.bold('destination')}:      the full or partial destination of the converted files.
+           ${chalk.bold(
+             'destination'
+           )}:      the full or partial destination of the converted files.
            (optional)        - when the destination is a directory path only, all generated
                                files are saved in it with a default '.scss' extension. If
                                a '.sass' extension is required instead, the --sass option must be included.
@@ -67,22 +70,22 @@ function usage (name) {
             --es='sq'||'dq'  (empty string)   Sass/scss representation for an empty string.
                                               Default is '""': { "prop": "" } => $xyzfilename: ( prop: "" );
             --sass           (sass ext.)      Use sass extension.
+            --mo             (merge objects)  Merge obtained sass strings into a single sass map/list.
+                                              Enabled only if destination contains a full file name (name + .ext)
 
                                           
 `;
 }
 
-
 /**
  * @function hasArgs
  * @param {object} args - command line arguments extracted via/from/with yargs.
- * @returns {boolean} true if args has an "_" property and if this property has a length property which is different than 0.
+ * @returns {boolean} true if args has an "_" property and if this property has a length property different than 0.
  * @description This is an internal small helper function to quickly assess if 'json-to-scss' is called without any params. Note that the code written here relies on the fact that we are using the 'yargs' package.
  */
-function hasArgs (args) {
-  return args._ && args._.length;
+function hasArgs(args) {
+  return '_' in args && args._.length;
 }
-
 
 /**
  * @function extensionCorrector
@@ -91,18 +94,33 @@ function hasArgs (args) {
  * @returns {Function} a function to be used as input for an Array.map(fn) function call.
  * @description Internal helper function encapsulating the destination file extension transformations.
  */
-function extensionCorrector (defaultExtension, requiredExtension) {
-  return (filepath) => {
-    const _extname = path.extname(filepath).toLowerCase();
-    switch(_extname) {
-    case '': return `${filepath}${'' !== requiredExtension ? requiredExtension : defaultExtension}`;
-    case '.scss': return (('' === requiredExtension) || (requiredExtension === _extname)) ? filepath : `${removePathExtension(filepath)}${requiredExtension}`;
-    case '.sass': return (('' === requiredExtension) || (requiredExtension === _extname)) ? filepath : `${removePathExtension(filepath)}${requiredExtension}`;
-    default : return `${removePathExtension(filepath)}${'' !== requiredExtension ? requiredExtension : defaultExtension}`;
+function extensionCorrector(defaultExtension, requiredExtension) {
+  return filepath => {
+    function _correctFilepathExtension(extensionName) {
+      let _switch = {
+        '': () =>
+          `${filepath}${
+            '' !== requiredExtension ? requiredExtension : defaultExtension
+          }`,
+        '.scss': () =>
+          '' === requiredExtension || requiredExtension === extensionName
+            ? filepath
+            : `${removePathExtension(filepath)}${requiredExtension}`,
+        '.sass': () =>
+          '' === requiredExtension || requiredExtension === extensionName
+            ? filepath
+            : `${removePathExtension(filepath)}${requiredExtension}`,
+        default: () =>
+          `${removePathExtension(filepath)}${
+            '' !== requiredExtension ? requiredExtension : defaultExtension
+          }`
+      };
+      return (_switch[extensionName] || _switch['default'])();
     }
+
+    return _correctFilepathExtension(path.extname(filepath).toLowerCase());
   };
 }
-
 
 /**
  * @function basenameExtractor
@@ -110,21 +128,19 @@ function extensionCorrector (defaultExtension, requiredExtension) {
  * @returns {string} the file path basename.
  * @description Internal helper & wrapper function extracting the file path's base name.
  */
-function basenameExtractor (filepath) {
+function basenameExtractor(filepath) {
   return pathBasename(filepath);
 }
 
-
 /**
- * @function dirnameSetup
+ * @function dirnameSetter
  * @param {string} dirname - the directory name we want to use for our destination file paths.
  * @returns {function} a function to be used as input for an Array.map(fn) function call.
  * @description set the directory(ies) for the given destination file path.
  */
-function dirnameSetup (dirname) {
-  return (filepath) => path.resolve(path.join(dirname,filepath));
+function dirnameSetter(dirname) {
+  return filepath => path.resolve(path.join(dirname, filepath));
 }
-
 
 /**
  * @function normalizeArgs
@@ -132,57 +148,73 @@ function dirnameSetup (dirname) {
  * @returns {{source: {paths: *}, destination: {paths: (*|Array)}, options: {prefix: string | string, suffix: (*|string), emptyString: string, indentationText: (*|string), indentationSize: (*|number), noUnderscore: boolean, format: string}}}
  * @description check & normalize the command line program arguments.
  */
-function normalizeArgs (args) {
+function normalizeArgs(args) {
   const _source = path.resolve(process.cwd(), `${args._[0]}`);
   const _sourcePaths = glob.sync(_source);
   const _defaultExtension = '.scss';
-  const _requiredExtension = args.sass ? '.sass' : '';
-  
-  let _destination = args._.length > 1 ? removePathExtension(path.resolve(process.cwd(), args._[1])) : '';
+  let _requiredExtension = 'sass' in args ? '.sass' : '';
+
+  const _destination =
+    args._.length > 1 ? path.resolve(process.cwd(), `${args._[1]}`) : '';
+  const _destinationExtname = path.extname(_destination).toLowerCase();
+
   let _destinationPaths = [];
-  if('' === _destination) {
-    _destinationPaths = _sourcePaths.map(extensionCorrector(_defaultExtension, _requiredExtension));
-  }
-  else {
-    _destinationPaths =
-      _sourcePaths
+  if ('' === _destination) {
+    _destinationPaths = _sourcePaths.map(
+      extensionCorrector(_defaultExtension, _requiredExtension)
+    );
+  } else {
+    if ('' !== _destinationExtname) {
+      if ('.sass' === _destinationExtname || '.scss' === _destinationExtname) {
+        _requiredExtension = _destinationExtname;
+        _destinationPaths = [_destination];
+      } else {
+        _destinationPaths = [removePathExtension(_destination)].map(
+          extensionCorrector(_defaultExtension, _requiredExtension)
+        );
+      }
+    } else {
+      _destinationPaths = _sourcePaths
         .map(basenameExtractor)
         .map(extensionCorrector(_defaultExtension, _requiredExtension))
-        .map(dirnameSetup(_destination));
+        .map(dirnameSetter(_destination));
+    }
   }
-  
+  const _mergeSourceFiles =
+    _sourcePaths.length > 1 && _sourcePaths.length !== _destinationPaths.length;
+
   return {
     source: {
       paths: _sourcePaths
     },
     destination: {
-      paths: _destinationPaths,
+      paths: _destinationPaths
     },
     options: {
-      prefix: args.p || '',
-      suffix: args.s || ';',
-      emptyString: args.es && ('sq' === args.es)? "''" : '""',
-      indentationText: args.tt || '  ',
-      indentationSize: args.tn || 1,
-      noUnderscore: args.underscore === false,
-      format: args.sass ? '.sass': '.scss'
+      prefix: 'p' in args ? args.p : '',
+      suffix: 's' in args ? args.s : ';',
+      emptyString: 'es' in args && 'sq' === args.es ? "''" : '""',
+      indentationText: 'tt' in args ? args.tt : '  ',
+      indentationSize: 'tn' in args ? args.tn : 1,
+      noUnderscore: !('underscore' in args),
+      format:
+        '' === _requiredExtension ? _defaultExtension : _requiredExtension,
+      mergeSourceFiles: _mergeSourceFiles,
+      mergeSassObjects: _mergeSourceFiles && 'mo' in args
     }
   };
 }
-
 
 /**
  * The 'json-to-scss' main function in charge of parsing arguments and, if possible,
  * executing the file conversion.
  */
-function main () {
+function main() {
   console.log(banner(packageJson.name, packageJson.version));
   if (hasArgs(args)) {
-    
-    if (args.h || args.help) {
+    if ('h' in args) {
       console.log(usage(packageJson.name));
-    }
-    else {
+    } else {
       const _nargs = normalizeArgs(args);
       if (_nargs.source.paths.length) {
         jsJsonFilesToSassScssFiles(
@@ -194,22 +226,24 @@ function main () {
           _nargs.options.indentationText,
           _nargs.options.indentationSize,
           _nargs.options.emptyString,
-          _nargs.options.noUnderscore
-          );
-      }
-      else {
-        console.log(`Hmmm strange... ${chalk.red(args._[0])} does not seem to exist. Mind checking it?`);
+          _nargs.options.noUnderscore,
+          _nargs.options.mergeSourceFiles,
+          _nargs.options.mergeSassObjects
+        );
+      } else {
+        console.log(
+          `Hmmm strange... ${chalk.red(
+            args._[0]
+          )} cannot be found. Could there be a small mistake in the source path?`
+        );
       }
     }
-  }
-  else {
+  } else {
     console.log(usage(packageJson.name));
   }
 }
-
 
 /**
  * Execute the main module function.
  */
 main();
-

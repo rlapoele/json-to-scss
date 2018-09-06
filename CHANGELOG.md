@@ -1,5 +1,19 @@
 # CHANGE LOG
 
+### Release 1.3.0
+- New Feature:
+  - added possibility to merge multiple converted sources into one single destination file.
+    - in this context, the prefix & suffix are repeated for each converted source content;
+      - the destination file therefore contains as many prefixed & suffixed block as there are sources.
+      - if no prefix is specified then each source file name becomes a prefix ($source-file-name: ...).
+    - by default, each converted source becomes a distinct/separated sass variable in the destination file.
+  - when merging multiple source files, added possibility to merge content as well using global option "--mo" (merge object);
+    - in this context, the prefix & suffix are only used once in the destination file and each individual converted block are comma+linefeed separated.  
+- Code modifications:
+  - further simplified code when possible (remove levels of nested internal function declarations).
+  - updated object property existence checks such as "if (property.object)..." and used "'property' in object ..." expressions instead.
+  - converted all switch statements into function + literal object declarations.
+
 ### Release 1.2.4
 - Code modifications
   - simplified code by removing all options & config objects as well unnecessary validations.

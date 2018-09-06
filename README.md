@@ -126,12 +126,6 @@ This example shows how to convert a single specific file using the default _json
 
 ##### Command:
 
-###### Input:
-```
-$ json-to-scss ./Examples/Example1/ProjectDir/tokens/myTokens.json
-```
-
-###### Output:
 ```
 $ json-to-scss ./Examples/Example1/ProjectDir/tokens/myTokens.json
 $ json-to-scss vX.Y.Z
@@ -213,12 +207,6 @@ module.exports = {
 
 ##### Command:
 
-###### Input:
-```
-$ json-to-scss './Examples/Example2/**/*.*'
-```
-
-###### Output:
 ```
 $ json-to-scss json-to-scss './Examples/Example2/**/*.*'
 $ json-to-scss vX.Y.Z
@@ -290,12 +278,6 @@ Additionally, we will ask _json-to-scss_ to use a tab text (_--tt option_) such 
 
 ##### Command:
 
-###### Input:
-```
-$ json-to-scss './Examples/Example3/**/*.*' ./Examples/Example3/ProjectDir/sass --sass --tt='    ' --tn=5
-```
-
-###### Output:
 ```
 $ json-to-scss './Examples/Example3/**/*.*' ./Examples/Example3/ProjectDir/sass --sass --tt='    ' --tn=5
 $ json-to-scss vX.Y.Z
@@ -395,8 +377,8 @@ This object is treated as a local conversion configuration; let us see what prop
   - this tells _json-to-scss_ to prefix the converted content using `__example-4`. Notice here that you do not need to include the `$` character since _json-to-scss_ will automatically insert it for you.
   
   - **notes:**
-    - this feature only exists in the context of local config and there is therefore no direct equivalent option at the command line level; the command line option which could potentially yield similar results is "--prefix".
-    - when specified, the `"sassVariableName"` property value takes precedence over the `"prefix"` property value (and therefore equivalent command line option "--prefix").
+    - this feature only exists in the context of local config and there is therefore no direct equivalent option at the command line level; the command line option which could potentially yield similar results is `--prefix`.
+    - when specified, the `"sassVariableName"` property value takes precedence over the `"prefix"` property value (and therefore equivalent command line option `--prefix`).
 
 - **filename**
   - this informs _json-to-scss_ that the destination file will have to be renamed ("myTokensRenamed" in this example); any specified extension will be ignored. 
@@ -422,12 +404,6 @@ This object is treated as a local conversion configuration; let us see what prop
 
 ##### Command:
 
-###### Input:
-```
-$ json-to-scss ./Examples/Example4/ProjectDir/tokens/myTokens.json
-```
-
-###### Output:
 ```
 $ json-to-scss ./Examples/Example4/ProjectDir/tokens/myTokens.json
 $ json-to-scss vX.Y.Z
@@ -475,3 +451,135 @@ As expected, the `"_scssToJson"` local configuration property/object has been re
 
 Additionally and due to the presence of `"noUnderscore": true`, all "`_`" (underscore) characters have been stripped out from the prefix/variable name after the automatically added "`$`" (dollar sign).
 
+#### Example #5
+
+This example illustrates 2 merge features (new as of v1.3.0).
+
+**Example #3**'s directory structure and source files are used.
+
+##### #5.1 - Merging of several source files into 1 destination file:
+
+In order to merge the converted content of several source files, one must specify a destination including a file name + extension (.sass or .scss).
+
+The destination file extension is important here as this is thanks to it that _json-to-scss_ can detect the merge request...
+
+###### Directory Structure:
+
+```
+.
+├─ Examples
+│   ├─ Example5
+│   │   └─ ProjectDir
+│   │       └─ tokens 
+│   │           ├─ colors.js
+│   │           └─ fontSizes.js
+.   .
+```
+
+
+###### Command
+
+```
+$ json-to-scss './Examples/Example5/ProjectDir/tokens/*.*' ./Examples/Example5/ProjectDir/scss/mergedTokenFiles.scss
+$ json-to-scss vX.Y.Z
+$    /.../Examples/Example5/ProjectDir/tokens/colors.js: content converted.
+$    /.../Examples/Example5/ProjectDir/tokens/fontSizes.json: content converted. File created!
+$       /.../Examples/Example5/ProjectDir/scss/mergedTokenFiles.scss
+```
+
+###### Output
+
+###### _Directory Structure:_
+
+```
+.
+├─ Examples
+│   ├─ Example5
+│   │   └─ ProjectDir
+│   │       ├─ scss 
+│   │       │   └─ mergedTokenFiles.scss
+│   │       └─ tokens 
+│   │           ├─ colors.js
+│   │           └─ fontSizes.js
+.   .
+```
+
+###### _mergedTokenFiles.scss:_
+```scss
+$colors: (
+  colors: (
+    primary-color: #FFFFFF,
+    accent-color: #0099FF
+  )
+);
+$fontSizes: (
+  font-sizes: (
+    small: .875rem,
+    medium: 1rem,
+    large: 2rem
+  ),
+  web-browser-default-font-size: 16px
+);
+```
+
+
+##### #5.2 - Merging of several source files AND of the converted content into 1 sass map/block.
+
+Note that in addition to specifying one specific destination file, we are using the `--mo` command line option here to tell _json-to-scss_ to also merge sass objects.
+
+###### Directory Structure:
+
+```
+.
+├─ Examples
+│   ├─ Example5
+│   │   └─ ProjectDir
+│   │       └─ tokens 
+│   │           ├─ colors.js
+│   │           └─ fontSizes.js
+.   .
+```
+
+###### Command:
+
+```
+$ json-to-scss './Examples/Example5/ProjectDir/tokens/*.*' ./Examples/Example5/ProjectDir/scss/mergedTokenFilesAndObjects.scss --mo
+$ json-to-scss vX.Y.Z
+$    /.../Examples/Example5/ProjectDir/tokens/colors.js: content converted.
+$    /.../Examples/Example5/ProjectDir/tokens/fontSizes.json: content converted. File created!
+$       /.../Examples/Example5/ProjectDir/scss/mergedTokenFiles.scss
+```
+
+###### Output:
+
+###### _Directory Structure:_
+
+```
+.
+├─ Examples
+│   ├─ Example5
+│   │   └─ ProjectDir
+│   │       ├─ scss 
+│   │       │   └─ mergedTokenFilesAndObjects.scss
+│   │       └─ tokens 
+│   │           ├─ colors.js
+│   │           └─ fontSizes.js
+.   .
+```
+
+###### _mergedTokenFilesAndObjects.scss_
+
+```scss
+$mergedTokenFilesAndObjects: (
+  colors: (
+    primary-color: #FFFFFF,
+    accent-color: #0099FF
+  ),
+  font-sizes: (
+    small: .875rem,
+    medium: 1rem,
+    large: 2rem
+  ),
+  web-browser-default-font-size: 16px
+);
+```
