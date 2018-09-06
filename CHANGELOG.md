@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+### Release 1.3.1
+- README.md typo fixes for example 5.2.
+- command line output format updates for merge object scenario.
+
 ### Release 1.3.0
 - New Feature:
   - added possibility to merge multiple converted sources into one single destination file.

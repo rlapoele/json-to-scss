@@ -546,8 +546,8 @@ Note that in addition to specifying one specific destination file, we are using 
 $ json-to-scss './Examples/Example5/ProjectDir/tokens/*.*' ./Examples/Example5/ProjectDir/scss/mergedTokenFilesAndObjects.scss --mo
 $ json-to-scss vX.Y.Z
 $    /.../Examples/Example5/ProjectDir/tokens/colors.js: content converted.
-$    /.../Examples/Example5/ProjectDir/tokens/fontSizes.json: content converted. File created!
-$       /.../Examples/Example5/ProjectDir/scss/mergedTokenFiles.scss
+$    /.../Examples/Example5/ProjectDir/tokens/fontSizes.json: content converted & merged. File created!
+$       /.../Examples/Example5/ProjectDir/scss/mergedTokenFilesAndObjects.scss
 ```
 
 ###### Output:
