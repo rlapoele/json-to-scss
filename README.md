@@ -208,7 +208,7 @@ module.exports = {
 ##### Command:
 
 ```
-$ json-to-scss json-to-scss './Examples/Example2/**/*.*'
+$ json-to-scss './Examples/Example2/**/*.*'
 $ json-to-scss vX.Y.Z
 $    /.../Examples/Example2/ProjectDir/tokens/colors.js: content converted. File created!
 $       /.../Examples/Example2/ProjectDir/tokens/colors.scss
