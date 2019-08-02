@@ -67,11 +67,24 @@ function usage(name) {
                                               Default: '  ' (two space characters)
             --tn=tabNumber   (tab number)     Number of tabulations.
                                               Default: 1 (set to 0 if --sass)
-            --es='sq'||'dq'  (empty string)   Sass/scss representation for an empty string.
+            --es='sq'||'dq'  (empty string)   Sass/scss representation for an empty string (single or double quote).
                                               Default is '""': { "prop": "" } => $xyzfilename: ( prop: "" );
             --sass           (sass ext.)      Use sass extension.
             --mo             (merge objects)  Merge obtained sass strings into a single sass map/list.
                                               Enabled only if destination contains a full file name (name + .ext)
+            --k='auto'||     (sass map keys)  Sass/scss format for map keys.
+                'sq'||'dq'                    'auto' (default): keys are formatted as per their converted type (number, ...)
+                                              'sq': all keys are single quoted.
+                                              'dq': all keys are doubled quoted.
+            --v='auto'||     (sass map val.)  Sass/scss format for map values other than nested maps.
+                'sq'||'dq'                    'auto' (default): values are formatted as per their converted type
+                                              'sq': all values are single quoted.
+                                              'dq': all values are doubled quoted.
+                                              Notes regarding 'sq' or 'dq' usage:
+                                              1- nested quote characters are automatically replaced by their counterpart.
+                                                 { "prop": 'Arial, "sans-serif"'} with 'dq' => ( prop: "Arial, 'sans-serif'" );
+                                              2- empty strings are formatted as per the given 'sq' or 'dq' option value regardless
+                                                 of the --es option.
 
                                           
 `;
@@ -200,7 +213,9 @@ function normalizeArgs(args) {
       format:
         '' === _requiredExtension ? _defaultExtension : _requiredExtension,
       mergeSourceFiles: _mergeSourceFiles,
-      mergeSassObjects: _mergeSourceFiles && 'mo' in args
+      mergeSassObjects: _mergeSourceFiles && 'mo' in args,
+      keys: 'k' in args ? ['auto', 'sq', 'dq'].indexOf(args.k) > -1 ? args.k : 'auto' : 'auto',
+      values: 'v' in args ? ['auto', 'sq', 'dq'].indexOf(args.v) > -1 ? args.v : 'auto' : 'auto',
     }
   };
 }
@@ -228,7 +243,9 @@ function main() {
           _nargs.options.emptyString,
           _nargs.options.noUnderscore,
           _nargs.options.mergeSourceFiles,
-          _nargs.options.mergeSassObjects
+          _nargs.options.mergeSassObjects,
+          _nargs.options.keys,
+          _nargs.options.values
         );
       } else {
         console.log(
