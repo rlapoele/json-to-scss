@@ -1,5 +1,11 @@
 # CHANGE LOG
 
+### Release 1.4.0
+- Upgraded dependencies.
+- New Features:
+  - added option allowing users to ask for converted Sass map keys to be wrapped in single or double quote characters.
+  - added option allowing users to ask for converted Sass map values (other than nested maps) to be wrapped in single or double quote characters. 
+
 ### Release 1.3.1
 - README.md typo fixes for example 5.2.
 - command line output format updates for merge object scenario.

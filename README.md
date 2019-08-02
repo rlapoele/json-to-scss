@@ -65,9 +65,24 @@ Usage: json-to-scss <source> [destination] [options]
                                           Default: '  ' (two space characters)
         --tn=tabNumber   (tab number)     Number of tabulations.
                                           Default: 1 (set to 0 if --sass)
-        --es='sq'||'dq'  (empty string)   Sass/scss representation for an empty string.
+        --es='sq'||'dq'  (empty string)   Sass/scss representation for an empty string (single or double quote).
                                           Default is '""': { "prop": "" } => $xyzfilename: ( prop: "" );
         --sass           (sass ext.)      Use sass extension.
+        --mo             (merge objects)  Merge obtained sass strings into a single sass map/list.
+                                          Enabled only if destination contains a full file name (name + .ext)
+        --k='auto'||     (sass map keys)  Sass/scss format for map keys.
+            'sq'||'dq'                    'auto' (default): keys are formatted as per their converted type (number, ...)
+                                          'sq': all keys are single quoted.
+                                          'dq': all keys are doubled quoted.
+        --v='auto'||     (sass map val.)  Sass/scss format for map values other than nested maps.
+            'sq'||'dq'                    'auto' (default): values are formatted as per their converted type
+                                          'sq': all values are single quoted.
+                                          'dq': all values are doubled quoted.
+                                          Notes regarding 'sq' or 'dq' usage:
+                                          1- nested quote characters are automatically replaced by their counterpart.
+                                             { "prop": "Arial, 'sans-serif'"} with 'sq' => ( prop: 'Arial, "sans-serif"' );
+                                          2- empty strings are formatted as per the given 'sq' or 'dq' option value regardless
+                                             of the --es option.
 ```
 
 ## Regarding `.js` files
@@ -120,9 +135,14 @@ This example shows how to convert a single specific file using the default _json
     "medium": "1rem",
     "large": "2rem"
   },
+  "font-family": {
+    "sans-serif": "'Roboto, Helvetica, Arial, sans-serif'"
+  },
   "web-browser-default-font-size": "16px"
 }
 ```
+
+Note: values corresponding to sass/scss list and which you cannot or do not want to store as an array in your JSON should be quoted such as "'my, list, of, values'".
 
 ##### Command:
 
@@ -160,6 +180,9 @@ $myTokens: (
     small: .875rem,
     medium: 1rem,
     large: 2rem
+  ),
+  font-family: (
+    sans-serif: 'Roboto, Helvetica, Arial, sans-serif'
   ),
   web-browser-default-font-size: 16px
 );
@@ -208,7 +231,7 @@ module.exports = {
 ##### Command:
 
 ```
-$ json-to-scss json-to-scss './Examples/Example2/**/*.*'
+$ json-to-scss './Examples/Example2/**/*.*'
 $ json-to-scss vX.Y.Z
 $    /.../Examples/Example2/ProjectDir/tokens/colors.js: content converted. File created!
 $       /.../Examples/Example2/ProjectDir/tokens/colors.scss
@@ -352,7 +375,9 @@ As you will see, this local config will overwrite/supersede the default & comman
     "emptyString": "''",
     "indentationText": "  ",
     "indentationSize": 2,
-    "noUnderscore": true
+    "noUnderscore": true,
+    "keyFormat": "dq",
+    "valueFormat": "auto"
   },
   "colors": {
     "primary-color": "#FFFFFF",
@@ -401,6 +426,11 @@ This object is treated as a local conversion configuration; let us see what prop
 - **noUnderscore**
   - when set to `true` (as it is the case in our example), this tells _json-to-scss_ to remove any `_` (underscore) character possibly present in the prefix and if such a prefix starts with `$_`. The same result can be achieved for all converted files using the command line option "--no-underscore".
 
+- **keyFormat**
+  - allows one to force sass map keys to be wrapped (or not - use "auto") in single (use "sq") or double quote (use "dq").
+
+- **valueFormat**
+  - allows one to force sass map values to be wrapped (or not - use "auto") in single (use "sq") or double quote (use "dq"). 
 
 ##### Command:
 
@@ -433,17 +463,17 @@ Notice now how "myTokens" got renamed "myTokensRenamed".
 
 ```scss
 $example-4: (
-    colors: (
-        primary-color: #FFFFFF,
-        accent-color: #0099FF
+    "colors": (
+        "primary-color": #FFFFFF,
+        "accent-color": #0099FF
     ),
-    font-sizes: (
-        small: .875rem,
-        medium: 1rem,
-        large: 2rem
+    "font-sizes": (
+        "small": .875rem,
+        "medium": 1rem,
+        "large": 2rem
     ),
-    example-of-empty-string: '',
-    web-browser-default-font-size: 16px
+    "example-of-empty-string": '',
+    "web-browser-default-font-size": 16px
 ); // an scss comment.
 ```
 
