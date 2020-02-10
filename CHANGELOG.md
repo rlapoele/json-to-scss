@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+### Release 1.5.0
+- New Feature:
+  - added option (i.e. --sk='font-family') allowing users to force matching JSON/js object key values to be quoted.
+
 ### Release 1.4.0
 - Upgraded dependencies.
 - New Features:
