@@ -15,6 +15,7 @@ const chalk = require('chalk');
 const glob = require('glob');
 const pathBasename = require('../lib/utils/path/basename');
 const removePathExtension = require('../lib/utils/path/removeExtension');
+const isString = require('../lib/utils/inspection/isString');
 const jsJsonFilesToSassScssFiles = require('../lib/jsJsonFilesToSassScssFiles');
 
 /**
@@ -216,6 +217,7 @@ function normalizeArgs(args) {
       mergeSassObjects: _mergeSourceFiles && 'mo' in args,
       keys: 'k' in args ? ['auto', 'sq', 'dq'].indexOf(args.k) > -1 ? args.k : 'auto' : 'auto',
       values: 'v' in args ? ['auto', 'sq', 'dq'].indexOf(args.v) > -1 ? args.v : 'auto' : 'auto',
+      stringKeys: 'sk' in args && isString(args.sk) ? args.sk : 'family,font-family,fontfamily,font-stack,fontstack,font-face,fontface'
     }
   };
 }
@@ -245,7 +247,8 @@ function main() {
           _nargs.options.mergeSourceFiles,
           _nargs.options.mergeSassObjects,
           _nargs.options.keys,
-          _nargs.options.values
+          _nargs.options.values,
+          _nargs.options.stringKeys
         );
       } else {
         console.log(

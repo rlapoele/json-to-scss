@@ -83,6 +83,13 @@ Usage: json-to-scss <source> [destination] [options]
                                              { "prop": "Arial, 'sans-serif'"} with 'sq' => ( prop: 'Arial, "sans-serif"' );
                                           2- empty strings are formatted as per the given 'sq' or 'dq' option value regardless
                                              of the --es option.
+        --sk='family,...' (string keys)   Comma separated property names (keys) for which values must be quoted.
+                                          Property names are case insensitive (fontFamily will be treated like FontFamily, etc...).
+                                          Only non-object value keys are compared against the "string keys":
+                                             { "key 1": { "key 2": "some,possible,values" }} => only "key 2" will be considered.
+                                          Default "string keys" (property names) are:
+                                             family,font-family,fontfamily,stack,font-stack,fontstack,face,font-face,fontface
+                                          Turn this option off by setting it to '' (e.g. --sk='').
 ```
 
 ## Regarding `.js` files
