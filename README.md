@@ -96,8 +96,10 @@ Usage: json-to-scss <source> [destination] [options]
                                           In case of flatten key name conflict(s), the latest processed key value is used.
                                           This option is not available in the js/JSON embed-able config.
         --fkc='kebab'||  (flat. key case) Flattened key case.
-              'camel'                     'kebab' (default): nested keys are dash separated.
-                                          'none': nested keys are concatenated as-is. Sub-sequent nested keys are capitalized.
+              'camel'                    'kebab' (default): nested keys are dash separated. No letter case change.
+                                         'camel': top level keys are left as-is whereas nested keys are capitalized before
+                                             being concatenated. The nested key capitalization does not change the case of the
+                                             subsequent letters: 'hEllO' => 'HEllO'.
 
 
 ```
