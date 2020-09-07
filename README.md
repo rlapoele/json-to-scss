@@ -83,13 +83,23 @@ Usage: json-to-scss <source> [destination] [options]
                                              { "prop": "Arial, 'sans-serif'"} with 'sq' => ( prop: 'Arial, "sans-serif"' );
                                           2- empty strings are formatted as per the given 'sq' or 'dq' option value regardless
                                              of the --es option.
-        --sk='family,...' (string keys)   Comma separated property names (keys) for which values must be quoted.
+        --sk='family,..' (string keys)    Comma separated property names (keys) for which values must be quoted.
                                           Property names are case insensitive (fontFamily will be treated like FontFamily, etc...).
                                           Only non-object value keys are compared against the "string keys":
                                              { "key 1": { "key 2": "some,possible,values" }} => only "key 2" will be considered.
                                           Default "string keys" (property names) are:
                                              family,font-family,fontfamily,stack,font-stack,fontstack,face,font-face,fontface
                                           Turn this option off by setting it to '' (e.g. --sk='').
+        --fk             (flatten keys)   Flatten JSON/js object keys to produce series of sass/scss variables instead of a map.
+                                          Provided prefix and suffix, if any, are applied to each flatten key.
+                                          Key name elements (nested JSON object props) are dash separated (kebab-case).
+                                          In case of flatten key name conflict(s), the latest processed key value is used.
+                                          This option is not available in the js/JSON embed-able config.
+        --fkc='kebab'||  (flat. key case) Flattened key case.
+              'camel'                     'kebab' (default): nested keys are dash separated.
+                                          'none': nested keys are concatenated as-is. Sub-sequent nested keys are capitalized.
+
+
 ```
 
 ## Regarding `.js` files

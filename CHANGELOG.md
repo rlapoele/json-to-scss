@@ -1,5 +1,12 @@
 # CHANGE LOG
 
+### Release 1.6.0
+- New Features:
+  - added option allowing users to obtain a list of sass/scss variables obtained from a flattened JSON/js object.
+    - flattened keys can either be in kebab-case (default) or camel-case.
+    - when flattening with kebab-case, json-to-scss does currently not change the nested key case.
+    - when flattening with came-case, json-to-scss does currently only uppercase the first letter of the nested keys.
+
 ### Release 1.5.0
 - New Feature:
   - added option (i.e. --sk='font-family') allowing users to force matching JSON/js object key values to be quoted.

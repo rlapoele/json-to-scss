@@ -86,6 +86,16 @@ function usage(name) {
                                                  { "prop": 'Arial, "sans-serif"'} with 'dq' => ( prop: "Arial, 'sans-serif'" );
                                               2- empty strings are formatted as per the given 'sq' or 'dq' option value regardless
                                                  of the --es option.
+            --fk             (flatten keys)   Flatten JSON/js object keys to produce series of sass/scss variables instead of a map.
+                                              Provided prefix and suffix, if any, are applied to each flatten key.
+                                              Key name elements (nested JSON object props) are dash separated (kebab-case).
+                                              In case of flatten key name conflict(s), the latest processed key value is used.
+                                              This option is not available in the js/JSON embed-able config.
+            --fkc='kebab'||  (flat. key case) Flattened key case.
+                  'camel'                    'kebab' (default): nested keys are dash separated.
+                                              'none': nested keys are concatenated as-is. Sub-sequent nested keys are capitalized.
+                                             
+
 
                                           
 `;
@@ -217,7 +227,9 @@ function normalizeArgs(args) {
       mergeSassObjects: _mergeSourceFiles && 'mo' in args,
       keys: 'k' in args ? ['auto', 'sq', 'dq'].indexOf(args.k) > -1 ? args.k : 'auto' : 'auto',
       values: 'v' in args ? ['auto', 'sq', 'dq'].indexOf(args.v) > -1 ? args.v : 'auto' : 'auto',
-      stringKeys: 'sk' in args && isString(args.sk) ? args.sk : 'family,font-family,fontfamily,font-stack,fontstack,font-face,fontface'
+      stringKeys: 'sk' in args && isString(args.sk) ? args.sk : 'family,font-family,fontfamily,font-stack,fontstack,font-face,fontface',
+      flattenKeys: 'fk' in args,
+      flattenedKeyCase: 'fkc' in args ? ['kebab', 'camel'].indexOf(args.fkc) > -1 ? args.fkc : 'kebab' : 'kebab'
     }
   };
 }
@@ -248,7 +260,9 @@ function main() {
           _nargs.options.mergeSassObjects,
           _nargs.options.keys,
           _nargs.options.values,
-          _nargs.options.stringKeys
+          _nargs.options.stringKeys,
+          _nargs.options.flattenKeys,
+          _nargs.options.flattenedKeyCase
         );
       } else {
         console.log(

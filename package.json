@@ -1,6 +1,6 @@
 {
   "name": "json-to-scss",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "main": "lib/jsJsonFilesToSassScssFiles.js",
   "license": "MIT",
   "repository": {
@@ -28,7 +28,7 @@
     "lodash.isplainobject": "^4.0.6",
     "node-emoji": "^1.10.0",
     "terminal-overwrite": "^2.0.1",
-    "yargs": "^13.3.0"
+    "yargs": "^13.3.2"
   },
   "bin": {
     "json-to-scss": "bin/cli.js"
