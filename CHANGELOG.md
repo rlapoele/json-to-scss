@@ -1,5 +1,12 @@
 # CHANGE LOG
 
+### Release 1.6.2
+- Fixed bug occurring when more than 2 files are being merged and the merge object option (--mo) is activated.
+  - see https://github.com/rlapoele/json-to-scss/issues/10
+  
+### Release 1.6.1
+- Fixed typos in CLI (json-to-scss) help text & README.md
+
 ### Release 1.6.0
 - New Features:
   - added option allowing users to obtain a list of sass/scss variables obtained from a flattened JSON/js object.
