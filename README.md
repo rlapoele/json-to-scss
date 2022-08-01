@@ -90,6 +90,8 @@ Usage: json-to-scss <source> [destination] [options]
                                           Default "string keys" (property names) are:
                                              family,font-family,fontfamily,stack,font-stack,fontstack,face,font-face,fontface
                                           Turn this option off by setting it to '' (e.g. --sk='').
+        --kv           (keys as values)   Each key within your JSON/js object will produce a new sass/scss variable,
+                                          instead of being contained in a wrapping map
         --fk             (flatten keys)   Flatten JSON/js object keys to produce series of sass/scss variables instead of a map.
                                           Provided prefix and suffix, if any, are applied to each flatten key.
                                           Key name elements (nested JSON object props) are dash separated (kebab-case).

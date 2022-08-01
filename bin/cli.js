@@ -86,6 +86,8 @@ function usage(name) {
                                                  { "prop": 'Arial, "sans-serif"'} with 'dq' => ( prop: "Arial, 'sans-serif'" );
                                               2- empty strings are formatted as per the given 'sq' or 'dq' option value regardless
                                                  of the --es option.
+            --kv           (keys as values)   Each key within your JSON/js object will produce a new sass/scss variable,
+                                              instead of being contained in a wrapping map
             --fk             (flatten keys)   Flatten JSON/js object keys to produce series of sass/scss variables instead of a map.
                                               Provided prefix and suffix, if any, are applied to each flatten key.
                                               Key name elements (nested JSON object props) are dash separated (kebab-case).
@@ -96,10 +98,10 @@ function usage(name) {
                                              'camel': top level keys are left as-is whereas nested keys are capitalized before
                                                  being concatenated. The nested key capitalization does not change the case of the
                                                  subsequent letters: 'hEllO' => 'HEllO'.
-                                             
 
 
-                                          
+
+
 `;
 }
 
@@ -231,7 +233,8 @@ function normalizeArgs(args) {
       values: 'v' in args ? ['auto', 'sq', 'dq'].indexOf(args.v) > -1 ? args.v : 'auto' : 'auto',
       stringKeys: 'sk' in args && isString(args.sk) ? args.sk : 'family,font-family,fontfamily,font-stack,fontstack,font-face,fontface',
       flattenKeys: 'fk' in args,
-      flattenedKeyCase: 'fkc' in args ? ['kebab', 'camel'].indexOf(args.fkc) > -1 ? args.fkc : 'kebab' : 'kebab'
+      flattenedKeyCase: 'fkc' in args ? ['kebab', 'camel'].indexOf(args.fkc) > -1 ? args.fkc : 'kebab' : 'kebab',
+      keysAsVars: 'kv' in args,
     }
   };
 }
@@ -264,7 +267,8 @@ function main() {
           _nargs.options.values,
           _nargs.options.stringKeys,
           _nargs.options.flattenKeys,
-          _nargs.options.flattenedKeyCase
+          _nargs.options.flattenedKeyCase,
+          _nargs.options.keysAsVars
         );
       } else {
         console.log(
