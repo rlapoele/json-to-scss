@@ -176,12 +176,12 @@ function dirnameSetter(dirname) {
  */
 function normalizeArgs(args) {
   const _source = path.resolve(process.cwd(), `${args._[0]}`);
-  const _sourcePaths = glob.sync(_source);
+  const _sourcePaths = args._[0].indexOf("*") >= 0 ? glob.sync(_source) : args._.slice(0, args._.length - 1).map(i => path.resolve(process.cwd(), i));
   const _defaultExtension = '.scss';
   let _requiredExtension = 'sass' in args ? '.sass' : '';
 
   const _destination =
-    args._.length > 1 ? path.resolve(process.cwd(), `${args._[1]}`) : '';
+    args._.length > 1 ? path.resolve(process.cwd(), `${args._[args._.length - 1]}`) : '';
   const _destinationExtname = path.extname(_destination).toLowerCase();
 
   let _destinationPaths = [];
